@@ -37,27 +37,24 @@ getMatchesData();
 getDeliveriesData();
 setTimeout(function(){
    console.log(deliveries.length);
-  // findTotalMatchesPlayedPerCity(matches);
-  //findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
- // findExtraRunsPerTeamsIn2016(matches,deliveries);
- //findMatchesWonPerTeam(matches);
- findMatchesPlayedPerYear(matches);
+  findTotalMatchesPlayedPerCity(matches);
+  findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
+  findExtraRunsPerTeamsIn2016(matches,deliveries);
+  findMatchesWonPerTeam(matches);
+  findMatchesPlayedPerYear(matches);
 },3000);
 
-
-function findTotalMatchesPlayedPerCity(matches)
+function findTotalMatchesPlayedPerCity(match)
 {
     var totalMatchesPlayedPerCity={}; 
-    for(var i=0;i<matches.length;i++)
+    for(var i=0;i<match.length;i++)
     {
-        let city=matches[i].city;
+        let city=match[i].city;
         if(totalMatchesPlayedPerCity.hasOwnProperty(city))
         {
-           // console.log("inside if");
             totalMatchesPlayedPerCity[city]=totalMatchesPlayedPerCity[city]+1;
         }
         else{
-           // console.log("inside else");
             totalMatchesPlayedPerCity[city]=1;
         }
     }
@@ -65,31 +62,30 @@ function findTotalMatchesPlayedPerCity(matches)
 }
 
 
-function findEconomicalBowlersPerRunGivenIn2015(matches,deliveries){
+function findEconomicalBowlersPerRunGivenIn2015(match,delivery){
     var  bowlerPerRunGiven={};
     const matchID=new Set();
-    for(let i=0;i<matches.length;i++)
+    for(let i=0;i<match.length;i++)
     {
-        var season=matches[i].season;
+        var season=match[i].season;
         if(season==2015)
         {  
-            matchID.add(matches[i].id);
+            matchID.add(match[i].id);
         }
     }
-    console.log(matchID.size);
-    for(let i=0;i<deliveries.length;i++)
+   
+    for(let i=0;i<delivery.length;i++)
     {
-        let deliveryId=deliveries[i].match_id;
+        let deliveryId=delivery[i].match_id;
         if(matchID.has(deliveryId))
         {
-            let bowler=deliveries[i].bowler;
-            //console.log("b="+bowler);
+            let bowler=delivery[i].bowler;
             if(!bowlerPerRunGiven.hasOwnProperty(bowler))
             {
-                bowlerPerRunGiven[bowler]=deliveries[i].total_runs;
+                bowlerPerRunGiven[bowler]=delivery[i].total_runs;
             }
             else{
-                bowlerPerRunGiven[bowler]= parseInt(bowlerPerRunGiven[bowler])+parseInt(deliveries[i].total_runs);
+                bowlerPerRunGiven[bowler]= parseInt(bowlerPerRunGiven[bowler])+parseInt(delivery[i].total_runs);
             }
         }
     }
