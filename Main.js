@@ -33,18 +33,18 @@ function getDeliveriesData(){
     return deliveries;
 }
 
-//getMatchesData();
+getMatchesData();
 getDeliveriesData();
 setTimeout(function(){
-   console.log(deliveries);
+   console.log(deliveries.length);
   // findTotalMatchesPlayedPerCity(matches);
+  findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
 },3000);
 
 
 function findTotalMatchesPlayedPerCity(matches)
 {
-    var totalMatchesPlayedPerCity={};
-    console.log(matches.length);   
+    var totalMatchesPlayedPerCity={}; 
     for(var i=0;i<matches.length;i++)
     {
         let city=matches[i].city;
@@ -62,8 +62,36 @@ function findTotalMatchesPlayedPerCity(matches)
 }
 
 
-// function findEconomicalBowlersPerRunGivenIn2015()
-// {
+function findEconomicalBowlersPerRunGivenIn2015(matches,deliveries){
+    var  bowlerPerRunGiven={};
+    const matchID=new Set();
+    for(let i=0;i<matches.length;i++)
+    {
+        var season=matches[i].season;
+        if(season==2015)
+        {  
+            matchID.add(matches[i].id);
+        }
+    }
+    console.log(matchID.size);
+    for(let i=0;i<deliveries.length;i++)
+    {
+        let deliveryId=deliveries[i].match_id;
+        if(matchID.has(deliveryId))
+        {
+            let bowler=deliveries[i].bowler;
+            //console.log("b="+bowler);
+            if(!bowlerPerRunGiven.hasOwnProperty(bowler))
+            {
+                bowlerPerRunGiven[bowler]=deliveries[i].total_runs;
+            }
+            else{
+                bowlerPerRunGiven[bowler]= parseInt(bowlerPerRunGiven[bowler])+parseInt(deliveries[i].total_runs);
+            }
+        }
+    }
+    console.log(bowlerPerRunGiven);
+}
 
-// }
+
 
