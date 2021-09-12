@@ -39,7 +39,8 @@ setTimeout(function(){
    console.log(deliveries.length);
   // findTotalMatchesPlayedPerCity(matches);
   //findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
-  findExtraRunsPerTeamsIn2016(matches,deliveries);
+ // findExtraRunsPerTeamsIn2016(matches,deliveries);
+ findMatchesWonPerTeam(matches);
 },3000);
 
 
@@ -125,6 +126,28 @@ function findExtraRunsPerTeamsIn2016(match,delivery)
         }
     }
     console.log(teamPerExtraRuns);
+}
+
+function findMatchesWonPerTeam(match){
+ var matchesWonPerTeam={};
+ for(var i=0;i<match.length;i++)
+ {
+     let team1=match[i].team1;
+     let winner=match[i].winner;
+
+     if(!matchesWonPerTeam.hasOwnProperty(team1))
+     {
+         matchesWonPerTeam[team1]=0;
+     }
+     if(!matchesWonPerTeam.hasOwnProperty(winner))
+     {
+         matchesWonPerTeam[winner]=0;
+     }
+     else{
+         matchesWonPerTeam[winner]=parseInt(winner)+1;
+     }
+ }
+  console.log(matchesWonPerTeam);
 }
 
 
