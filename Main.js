@@ -16,11 +16,29 @@ function getMatchesData(){
     return matches;
 }
 
-getMatchesData();
+const deliveries=[];
+function getDeliveriesData(){
+    let count = 0;
+
+    csv({delimiter:','})
+    .fromFile('deliveries.csv')
+    .then((json)=>{
+        json.forEach((row)=>
+        {   
+            count++;
+            deliveries.push(row);
+        });
+        //console.log(deliveries);
+    });
+    return deliveries;
+}
+
+//getMatchesData();
+getDeliveriesData();
 setTimeout(function(){
-   //console.log(matches[1]);
-   findTotalMatchesPlayedPerCity(matches);
-},1000);
+   console.log(deliveries);
+  // findTotalMatchesPlayedPerCity(matches);
+},3000);
 
 
 function findTotalMatchesPlayedPerCity(matches)
@@ -43,4 +61,9 @@ function findTotalMatchesPlayedPerCity(matches)
     console.log(totalMatchesPlayedPerCity);
 }
 
+
+// function findEconomicalBowlersPerRunGivenIn2015()
+// {
+
+// }
 
