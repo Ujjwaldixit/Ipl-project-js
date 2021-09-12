@@ -38,7 +38,8 @@ getDeliveriesData();
 setTimeout(function(){
    console.log(deliveries.length);
   // findTotalMatchesPlayedPerCity(matches);
-  findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
+  //findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
+  findExtraRunsPerTeamsIn2016(matches,deliveries);
 },3000);
 
 
@@ -91,6 +92,39 @@ function findEconomicalBowlersPerRunGivenIn2015(matches,deliveries){
         }
     }
     console.log(bowlerPerRunGiven);
+}
+
+function findExtraRunsPerTeamsIn2016(match,delivery)
+{
+    var teamPerExtraRuns={};
+    const matchId=new Set();
+    for(let i=0;i<match.length;i++)
+    {
+        let season=match[i].season;
+        if(season==2016)
+        {
+            matchId.add(match[i].id);
+        }
+    }
+
+    for(let i=0;i<delivery.length;i++)
+    {
+
+        if(matchId.has(delivery[i].match_id))
+        {
+            let battingTeam=delivery[i].batting_team;
+            if(!teamPerExtraRuns.hasOwnProperty(battingTeam))
+            {
+                teamPerExtraRuns[battingTeam]=delivery[i].extra_runs;
+            
+            }
+            else{
+                teamPerExtraRuns[battingTeam]=parseInt(teamPerExtraRuns[battingTeam])
+                                                          +parseInt(delivery[i].extra_runs);
+            }
+        }
+    }
+    console.log(teamPerExtraRuns);
 }
 
 
