@@ -41,6 +41,7 @@ setTimeout(function(){
   //findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
  // findExtraRunsPerTeamsIn2016(matches,deliveries);
  findMatchesWonPerTeam(matches);
+ //findMatchesPlayedPerYear(matches);
 },3000);
 
 
@@ -144,7 +145,7 @@ function findMatchesWonPerTeam(match){
          matchesWonPerTeam[winner]=0;
      }
      else{
-         matchesWonPerTeam[winner]=parseInt(winner)+1;
+         matchesWonPerTeam[winner]=1+matchesWonPerTeam[winner];
      }
  }
   console.log(matchesWonPerTeam);
@@ -152,3 +153,19 @@ function findMatchesWonPerTeam(match){
 
 
 
+function findMatchesPlayedPerYear(match)
+{
+    var matchesPlayedPerYear={};
+    for(var i=0;i<match.length;i++)
+    {
+        let season=match[i].season;
+        if(matchesPlayedPerYear.hasOwnProperty(season))
+        {
+            matchesPlayedPerYear[season]=1+matchesPlayedPerYear[season];
+        }
+        else{
+            matchesPlayedPerYear[season]=1;
+        }
+    }
+    console.log(matchesPlayedPerYear);
+}
