@@ -36,13 +36,14 @@ function getDeliveriesData(){
 getMatchesData();
 getDeliveriesData();
 setTimeout(function(){
-   console.log(deliveries.length);
-  findTotalMatchesPlayedPerCity(matches);
-  findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
-  findExtraRunsPerTeamsIn2016(matches,deliveries);
-  findMatchesWonPerTeam(matches);
+
   findMatchesPlayedPerYear(matches);
+  findMatchesWonPerTeam(matches);
+  findExtraRunsPerTeamsIn2016(matches,deliveries);
+  findEconomicalBowlersPerRunGivenIn2015(matches,deliveries);
+  findTotalMatchesPlayedPerCity(matches);
 },3000);
+
 
 function findTotalMatchesPlayedPerCity(match)
 {
@@ -58,6 +59,7 @@ function findTotalMatchesPlayedPerCity(match)
             totalMatchesPlayedPerCity[city]=1;
         }
     }
+    delete totalMatchesPlayedPerCity[''];
     console.log(totalMatchesPlayedPerCity);
 }
 
@@ -89,6 +91,11 @@ function findEconomicalBowlersPerRunGivenIn2015(match,delivery){
             }
         }
     }
+    bowlerPerRunGiven = Object.entries(bowlerPerRunGiven)
+    .sort(([,a],[,b]) => a-b)
+    .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+
+    delete bowlerPerRunGiven[''];
     console.log(bowlerPerRunGiven);
 }
 
@@ -96,7 +103,7 @@ function findExtraRunsPerTeamsIn2016(match,delivery)
 {
     var teamPerExtraRuns={};
     const matchId=new Set();
-    for(let i=0;i<match.length;i++)
+    for(let i=0; i<match.length; i++)
     {
         let season=match[i].season;
         if(season==2016)
@@ -122,6 +129,7 @@ function findExtraRunsPerTeamsIn2016(match,delivery)
             }
         }
     }
+    delete teamPerExtraRuns[''];
     console.log(teamPerExtraRuns);
 }
 
@@ -144,6 +152,8 @@ function findMatchesWonPerTeam(match){
          matchesWonPerTeam[winner]=1+matchesWonPerTeam[winner];;
      }
  }
+
+  delete matchesWonPerTeam[''];
   console.log(matchesWonPerTeam);
 }
 
@@ -163,5 +173,6 @@ function findMatchesPlayedPerYear(match)
             matchesPlayedPerYear[season]=1;
         }
     }
+    delete matchesPlayedPerYear[''];
     console.log(matchesPlayedPerYear);
 }
